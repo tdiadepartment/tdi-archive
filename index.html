@@ -1,39 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>TDI Archive</title>
-  <style>
-    body {
-      background-color: #f2e8d5;
-      font-family: "Courier New", monospace;
-      color: #3a3a3a;
-      text-align: center;
-      margin-top: 100px;
-    }
-    input, button {
-      font-family: "Courier New", monospace;
-      padding: 8px;
-      margin-top: 10px;
-    }
-  </style>
+<meta charset="UTF-8">
+<title>TDI Secure Access</title>
+
+<style>
+body {
+  background: #0e0e0e;
+  color: #d6d6d6;
+  font-family: "Courier New", monospace;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Flicker */
+@keyframes flicker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.container {
+  text-align: center;
+  animation: flicker 3s infinite;
+}
+
+input {
+  background: black;
+  border: 1px solid #444;
+  color: #d6d6d6;
+  padding: 10px;
+  font-family: inherit;
+  margin-top: 15px;
+}
+
+button {
+  background: none;
+  border: 1px solid #444;
+  color: #d6d6d6;
+  padding: 10px 20px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #222;
+}
+
+#status {
+  margin-top: 15px;
+  height: 20px;
+  color: #a33;
+}
+</style>
 </head>
+
 <body>
 
-<h2>RESTRICTED ACCESS</h2>
-<p>ENTER AUTHORIZATION CODE</p>
+<div class="container">
+  <h2>TECHNICAL DEVELOPMENT INDUSTRIES</h2>
+  <p id="text"></p>
 
-<input type="password" id="password">
-<br>
-<button onclick="check()">ACCESS</button>
+  <input type="password" id="password" placeholder="AUTHORIZATION CODE">
+  <br>
+  <button onclick="check()">REQUEST ACCESS</button>
+
+  <div id="status"></div>
+</div>
 
 <script>
+const lines = [
+  "SECURE ARCHIVE NODE ACTIVE",
+  "AUTHORIZED PERSONNEL ONLY",
+  "ALL ACTIONS ARE LOGGED"
+];
+
+let i = 0;
+let j = 0;
+let current = "";
+let deleting = false;
+
+function type() {
+  if (!deleting && j <= lines[i].length) {
+    current = lines[i].slice(0, j++);
+  } else if (deleting && j >= 0) {
+    current = lines[i].slice(0, j--);
+  }
+
+  document.getElementById("text").textContent = current;
+
+  if (j === lines[i].length) {
+    deleting = true;
+    setTimeout(type, 1200);
+    return;
+  }
+
+  if (deleting && j === 0) {
+    deleting = false;
+    i = (i + 1) % lines.length;
+  }
+
+  setTimeout(type, deleting ? 50 : 80);
+}
+
+type();
+
 function check() {
   const pass = document.getElementById("password").value;
-  if (pass === "TDI07401") {
-    window.location.href = "report23.html";
+  const status = document.getElementById("status");
+
+  if (pass === "INFORME23") {
+    status.textContent = "ACCESS GRANTED";
+    status.style.color = "#6f6";
+    setTimeout(() => {
+      window.location.href = "INFORME_23.pdf";
+    }, 1200);
   } else {
-    alert("ACCESS DENIED");
+    status.textContent = "ACCESS DENIED";
+    status.style.color = "#a33";
   }
 }
 </script>
