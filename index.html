@@ -117,12 +117,7 @@ function check() {
       window.location.href = "TDI_Report23.pdf";
     }, 1500);
 
-  } else {
-    attempts++;
-    status.textContent = "ACCESS DENIED (" + attempts + "/3)";
-    status.style.color = "#a33";
-
-      if (pass === "TDI1304EARLY") {
+     if (pass === "TDI1304EARLY") {
     status.textContent = "ACCESS GRANTED";
     status.style.color = "#6f6";
 
