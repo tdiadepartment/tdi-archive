@@ -16,7 +16,6 @@ body {
   overflow: hidden;
 }
 
-/* Flicker */
 @keyframes flicker {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.6; }
@@ -32,8 +31,8 @@ input {
   border: 1px solid #444;
   color: #d6d6d6;
   padding: 10px;
-  font-family: inherit;
   margin-top: 15px;
+  font-family: inherit;
 }
 
 button {
@@ -52,7 +51,6 @@ button:hover {
 #status {
   margin-top: 15px;
   height: 20px;
-  color: #a33;
 }
 </style>
 </head>
@@ -60,7 +58,7 @@ button:hover {
 <body>
 
 <div class="container">
-  <h2>TDI ARCHIVE NO.23 ████████████</h2>
+  <h2>TECHNICAL DEVELOPMENT INDUSTRIES</h2>
   <p id="text"></p>
 
   <input type="password" id="password" placeholder="AUTHORIZATION CODE">
@@ -79,30 +77,30 @@ const lines = [
 
 let i = 0;
 let j = 0;
-let current = "";
 let deleting = false;
+let attempts = 0;
 
 function type() {
-  if (!deleting && j <= lines[i].length) {
-    current = lines[i].slice(0, j++);
-  } else if (deleting && j >= 0) {
-    current = lines[i].slice(0, j--);
-  }
-
+  let current = lines[i].slice(0, j);
   document.getElementById("text").textContent = current;
 
-  if (j === lines[i].length) {
-    deleting = true;
-    setTimeout(type, 1200);
-    return;
+  if (!deleting) {
+    j++;
+    if (j > lines[i].length) {
+      deleting = true;
+      setTimeout(type, 1200);
+      return;
+    }
+  } else {
+    j--;
+    if (j < 0) {
+      deleting = false;
+      i = (i + 1) % lines.length;
+      j = 0;
+    }
   }
 
-  if (deleting && j === 0) {
-    deleting = false;
-    i = (i + 1) % lines.length;
-  }
-
-  setTimeout(type, deleting ? 50 : 80);
+  setTimeout(type, deleting ? 40 : 80);
 }
 
 type();
@@ -111,15 +109,22 @@ function check() {
   const pass = document.getElementById("password").value;
   const status = document.getElementById("status");
 
-  if (pass === "TDI07401") {
+  if (pass === "INFORME23") {
     status.textContent = "ACCESS GRANTED";
     status.style.color = "#6f6";
+
     setTimeout(() => {
-      window.location.href = "TDI_Report23.pdf";
-    }, 1200);
+      window.location.href = "INFORME_23.pdf";
+    }, 1500);
+
   } else {
-    status.textContent = "ACCESS DENIED";
+    attempts++;
+    status.textContent = "ACCESS DENIED (" + attempts + "/3)";
     status.style.color = "#a33";
+
+    if (attempts > 3) {
+      window.location.href = "terminated.html";
+    }
   }
 }
 </script>
