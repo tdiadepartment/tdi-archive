@@ -80,6 +80,13 @@ let j = 0;
 let deleting = false;
 let attempts = 0;
 
+/* CONTRASEÑAS Y ARCHIVOS */
+const accessMap = {
+  "TDI07401": "TDI_Report23.pdf",
+  "TDI1304EARLY": "TDI_Report13.pdf",
+  // puedes añadir más aquí
+};
+
 function type() {
   let current = lines[i].slice(0, j);
   document.getElementById("text").textContent = current;
@@ -106,23 +113,15 @@ function type() {
 type();
 
 function check() {
-  const pass = document.getElementById("password").value;
+  const pass = document.getElementById("password").value.trim();
   const status = document.getElementById("status");
 
-  if (pass === "TDI07401") {
+  if (accessMap[pass]) {
     status.textContent = "ACCESS GRANTED";
     status.style.color = "#6f6";
 
     setTimeout(() => {
-      window.location.href = "TDI_Report23.pdf";
-    }, 1500);
-
-     if (pass === "TDI1304EARLY") {
-    status.textContent = "ACCESS GRANTED";
-    status.style.color = "#6f6";
-
-    setTimeout(() => {
-      window.location.href = "TDI_Report13.pdf";
+      window.location.href = accessMap[pass];
     }, 1500);
 
   } else {
@@ -130,13 +129,9 @@ function check() {
     status.textContent = "ACCESS DENIED (" + attempts + "/3)";
     status.style.color = "#a33";
 
-
     if (attempts > 3) {
       window.location.href = "terminated.html";
     }
   }
 }
 </script>
-
-</body>
-</html>
