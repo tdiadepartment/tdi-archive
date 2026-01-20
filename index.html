@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>TDI Secure Access</title>
+<title>TDI Archive Secure Access</title>
 
 <style>
 body {
@@ -109,12 +109,12 @@ function check() {
   const pass = document.getElementById("password").value;
   const status = document.getElementById("status");
 
-  if (pass === "INFORME23") {
+  if (pass === "TDI07401") {
     status.textContent = "ACCESS GRANTED";
     status.style.color = "#6f6";
 
     setTimeout(() => {
-      window.location.href = "INFORME_23.pdf";
+      window.location.href = "TDI_Report23.pdf";
     }, 1500);
 
   } else {
