@@ -122,6 +122,20 @@ function check() {
     status.textContent = "ACCESS DENIED (" + attempts + "/3)";
     status.style.color = "#a33";
 
+      if (pass === "TDI1304EARLY") {
+    status.textContent = "ACCESS GRANTED";
+    status.style.color = "#6f6";
+
+    setTimeout(() => {
+      window.location.href = "TDI_Report13.pdf";
+    }, 1500);
+
+  } else {
+    attempts++;
+    status.textContent = "ACCESS DENIED (" + attempts + "/3)";
+    status.style.color = "#a33";
+
+
     if (attempts > 3) {
       window.location.href = "terminated.html";
     }
